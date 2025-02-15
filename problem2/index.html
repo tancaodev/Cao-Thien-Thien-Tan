@@ -13,13 +13,17 @@
   <!-- You may reorganise the whole HTML, as long as your form achieves the same effect. -->
   <form onsubmit="return !1">
     <h5>Swap</h5>
+    <label for="from-currency">From</label>
+    <select id="from-currency"></select>
+
     <label for="input-amount">Amount to send</label>
-    <input id="input-amount" />
+    <input id="input-amount" type="number" />
+
+    <label for="to-currency">To</label>
+    <select id="to-currency"></select>
 
     <label for="output-amount">Amount to receive</label>
-    <input id="output-amount" />
-
-    <button>CONFIRM SWAP</button>
+    <input id="output-amount" disabled />
   </form>
   <script src="script.js"></script>
 </body>
