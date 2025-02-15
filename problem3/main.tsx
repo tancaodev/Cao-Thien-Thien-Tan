@@ -1,6 +1,8 @@
 interface WalletBalance {
 	currency: string;
 	amount: number;
+	/* 1. missing blockchain data type */
+	blockchain: string;
 }
 interface FormattedWalletBalance {
 	currency: string;
@@ -9,8 +11,7 @@ interface FormattedWalletBalance {
 }
 
 interface Props extends BoxProps {}
-const WalletPage: React.FC<Props> = (props: Props) => {
-	const { children, ...rest } = props;
+const WalletPage: React.FC<Props> = ({ children, ...rest }) => {
 	const balances = useWalletBalances();
 	const prices = usePrices();
 
@@ -32,40 +33,44 @@ const WalletPage: React.FC<Props> = (props: Props) => {
 	};
 
 	const sortedBalances = useMemo(() => {
-		return balances
-			.filter((balance: WalletBalance) => {
-				const balancePriority = getPriority(balance.blockchain);
-				if (lhsPriority > -99) {
-					if (balance.amount <= 0) {
-						return true;
-					}
-				}
-				return false;
-			})
-			.sort((lhs: WalletBalance, rhs: WalletBalance) => {
-				const leftPriority = getPriority(lhs.blockchain);
-				const rightPriority = getPriority(rhs.blockchain);
-				if (leftPriority > rightPriority) {
-					return -1;
-				} else if (rightPriority > leftPriority) {
-					return 1;
-				}
-			});
-	}, [balances, prices]);
+		return (
+			balances
+				/* 
+					2. Incorrect Filtering Logic:
+						- lhsPriority is undefined
+						- only filter which balance.amount > 0, 
+						because old logic only allows balances less than or equal to 0
+				*/
+				.filter(
+					(balance: WalletBalance) =>
+						getPriority(balance.blockchain) > -99 &&
+						balance.amount > 0
+				)
+				/*
+					3. Incorrect Sorting Logic
+					- sort() function may behave unexpectedly in case leftPriority === rightPriority
+					- Sort balances based on priority (higher priority first)
+				*/
+				.sort(
+					(lhs: WalletBalance, rhs: WalletBalance) =>
+						getPriority(rhs.blockchain) -
+						getPriority(lhs.blockchain)
+				)
+		);
+		/* 
+			4. Remove prices from dependencies 
+			- In function scopes there's no use of prices
+		*/
+	}, [balances]);
 
-	const formattedBalances = sortedBalances.map((balance: WalletBalance) => {
-		return {
-			...balance,
-			formatted: balance.amount.toFixed(),
-		};
-	});
+	/* 5. Remove formattedBalances because it is defined but no used */
 
 	const rows = sortedBalances.map(
 		(balance: FormattedWalletBalance, index: number) => {
 			const usdValue = prices[balance.currency] * balance.amount;
 			return (
 				<WalletRow
-					className={classes.row}
+					/* 6. Remove classes.row because classes is not defined */
 					key={index}
 					amount={balance.amount}
 					usdValue={usdValue}
