@@ -24,7 +24,7 @@ async function populateCurrencyOptions() {
 	});
 
 	fromSelect.value = 'USD';
-	toSelect.value = data[0].currency;
+	toSelect.value = currencyData[0].currency;
 
 	updateOutputAmount();
 }
