@@ -1,10 +1,10 @@
-# 99Tech Code Challenge #1 #
+# Cao Thien Thien Tan - Frontend Developer Position #
 
-Note that if you fork this repository, your responses may be publicly linked to this repo.  
-Please submit your application along with the solutions attached or linked.   
-
-It is important that you minimally attempt the problems, even if you do not arrive at a working solution.
-
-## Submission ##
-You can either provide a link to an online repository, attach the solution in your application, or whichever method you prefer.
-We're cool as long as we can view your solution without any pain.
+## Problem 1 ##
+Solved in three ways: for loop, Gauss's formula, recursive
+## Problem 2 ##
+- Load data from the API once and store it in a global variable (to avoid calling the API multiple times and wasting resources).
+- Listen to the input event on the amount input box to update the value immediately.
+- Automatically update the results in the output box every time the user changes the input value or selects a different token.
+## Problem 3 ##
+Please check this [commit](https://github.com/tancaodev/Cao-Thien-Thien-Tan/commit/5253f637873988daf7c77feb89c2aa3a5c40581b) for my changes on this problem. 
